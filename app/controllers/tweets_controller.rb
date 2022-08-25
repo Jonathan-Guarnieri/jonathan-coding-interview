@@ -1,6 +1,8 @@
 class TweetsController < ApplicationController
   def index
-    tweets = Tweet.paginate(index_page)
+    tweets = Tweet
+               .by_user(params[:user_id])
+               .paginate(index_page)
 
     render json: tweets
   end
