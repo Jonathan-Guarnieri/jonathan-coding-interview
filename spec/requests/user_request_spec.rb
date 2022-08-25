@@ -30,6 +30,18 @@ RSpec.describe "Users", type: :request do
       end
     end
 
+    context 'when fetching users by username' do
+      let!(:max) { create(:user, username: 'max') }
+      let!(:mathew) { create(:user, username: 'mathew') }
+      let!(:spider) { create(:user, username: 'spider') }
+
+      it 'returns only the users that matchs with the username' do
+        get users_path, params: { username: 'ma' }
+
+        expect(result.map { |element| element['id'] } ).to eq([max.id, mathew.id])
+      end
+    end
+
     context 'when fetching all users' do
       include_context 'with multiple companies'
 
